@@ -1,0 +1,47 @@
+steps:
+  - id: terraform-format
+    name: hashicorp/terraform:1.15.8
+    args:
+      - "-chdir=${_TF_DIR}"
+      - "fmt"
+      - "-check"
+      - "-recursive"
+
+  - id: terraform-init
+    name: hashicorp/terraform:1.15.8
+    args:
+      - "-chdir=${_TF_DIR}"
+      - "init"
+      - "-input=false"
+
+  - id: terraform-validate
+    name: hashicorp/terraform:1.15.8
+    args:
+      - "-chdir=${_TF_DIR}"
+      - "validate"
+
+  - id: terraform-plan
+    name: hashicorp/terraform:1.15.8
+    args:
+      - "-chdir=${_TF_DIR}"
+      - "plan"
+      - "-input=false"
+      - "-out=tfplan"
+      - "-var=project_id=$PROJECT_ID"
+
+  - id: terraform-apply
+    name: hashicorp/terraform:1.15.8
+    args:
+      - "-chdir=${_TF_DIR}"
+      - "apply"
+      - "-input=false"
+      - "-auto-approve"
+      - "tfplan"
+
+substitutions:
+  _TF_DIR: terraform
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+
+timeout: "1800s"

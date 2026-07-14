@@ -1,0 +1,5 @@
+project_id    = "database-502018"
+region        = "us-central1"
+instance_name = "postgres-minimal"
+database_name = "appdb"
+db_user       = "appuser"
